@@ -1,7 +1,6 @@
 import pyautogui as pag
 import time
 import pyperclip
-import subprocess
 import os
 
 # Define the coordinates and use the `actions` list
