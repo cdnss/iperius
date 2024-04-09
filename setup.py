@@ -6,6 +6,7 @@ import os
 # Define the coordinates and use the `actions` list
 actions = [
     (266, 287, 4),  # unattended access
+    (266, 287, 1),  # unattended access
     (681, 564, 4),  # next
     (260, 507, 4),  # i accept agreement
     (673, 567, 4),  # next
@@ -39,7 +40,8 @@ for x, y, duration in actions:
     elif (x, y, duration) == (447, 286, 4):
         os.system('"C:\\Program Files\\IperiusRemote\\IperiusRemote.exe"')
         time.sleep(5)
-        pag.click(x, y, duration=duration)
+        pyautogui.moveTo(x, y, duration=duration)
+        pag.click
     else:
         pag.click(x, y, duration=duration)
 
