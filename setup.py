@@ -39,7 +39,7 @@ for x, y, duration in actions:
         pag.click(x, y, duration=duration)
         time.sleep(15)
     elif (x, y, duration) == (447, 286, 4):
-        os.system(r"C:\Program Files\IperiusRemote\IperiusRemote.exe")
+        os.system('"C:\\Program Files\\IperiusRemote\\IperiusRemote.exe"')
         time.sleep(5)
         pag.click(x, y, duration=duration)
     else:
