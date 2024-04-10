@@ -45,7 +45,7 @@ VM features:
 
 * **Download & Install Iperius Remote Application** On Your Device **([Android/Windows/Linux/Macos](https://www.iperiusremote.com/download-iperius-remote-desktop-windows.aspx))**
 
-* **Click the Iperius Remote ID Link** in your Iperius Remote click **Add New Connection** then **Paste ID in ID Fill**.
+* **Click the Iperius Remote ID Link** in your Iperius Remote **Type ID in Destination ID Fill**.
 
 * **Copy Iperius Remote Password from The IMG** & **Paste it** & **Hit Enter** (wait some connecting minutes).
 
