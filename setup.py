@@ -1,6 +1,6 @@
 import pyautogui as pag
 import time
-import pyperclip
+import requests
 import os
 
 # Define the coordinates and use the `actions` list
@@ -26,7 +26,9 @@ password = "TheDisa1a"
 screenshot = pyautogui.screenshot()
 access_token = '0205418ed7afc732fb798302849561a71c82b7a4'
 title = 'Iperius Remote ID | The Disala'
-img = 'IperiusRemoteID.png'
+show = 'Iperius Remote ID'
+description = 'Iperius Remote Pass : TheDisa1a'
+img_filename = 'IperiusRemoteID.png'
     
 for x, y, duration in actions:
     if (x, y, duration) == (677, 570, 4):
@@ -49,23 +51,28 @@ for x, y, duration in actions:
         pag.click(x, y, duration=duration)
 
 # Upload To IMGUR 
-def upload_image_to_imgur(img, access_token, title):
+def upload_image_to_imgur(img_filename, access_token, title, description):
     url = 'https://api.imgur.com/3/image'
     headers = {'Authorization': f'Bearer {access_token}'}
     
-    with open(image_path, 'rb') as f:
+    # Get the path to the current directory
+    current_directory = os.path.dirname(os.path.realpath(__file__))
+    img_path = os.path.join(current_directory, img_filename)
+    
+    with open(img_path, 'rb') as f:
         files = {'image': f}
-        data = {'title': title}
+        data = {'title': title, 'description': description}  # Add description field
         response = requests.post(url, headers=headers, files=files, data=data)
+        
     if response.status_code == 200:
         imgur_link = response.json()['data']['link']
         with open(os.path.join(current_directory, 'show.bat'), 'w') as bat_file:
-            bat_file.write(f'echo {title} : {imgur_link}')
+            bat_file.write(f'echo {show} : {imgur_link}')
         return imgur_link
     else:
         return None
 
-imgur_link = upload_image_to_imgur(img, access_token, title)
+imgur_link = upload_image_to_imgur(img_filename, access_token, title, description)
 if imgur_link:
     print("Image uploaded successfully.")
 else:
