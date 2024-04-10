@@ -17,6 +17,7 @@ actions = [
     (671, 567, 4),  # next (wait 15sec)
     (437, 303, 4),  # tic launch iperius
     (667, 567, 4),  # finish
+    (667, 567, 1),  # finish
     (447, 286, 4),  # ss id & upload (launch iperius)
 ]
 
