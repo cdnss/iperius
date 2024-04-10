@@ -17,12 +17,16 @@ actions = [
     (671, 567, 4),  # next (wait 15sec)
     (437, 303, 4),  # tic launch iperius
     (667, 567, 4),  # finish
-    (447, 286, 4),  # copy id (launch iperius)
+    (447, 286, 4),  # ss id & upload (launch iperius)
 ]
 
 # Wait for a few seconds to give time to focus on the target application
 time.sleep(10)
 password = "TheDisa1a"
+screenshot = pyautogui.screenshot()
+access_token = '0205418ed7afc732fb798302849561a71c82b7a4'
+title = 'Iperius Remote ID | The Disala'
+img = 'IperiusRemoteID.png'
     
 for x, y, duration in actions:
     if (x, y, duration) == (677, 570, 4):
@@ -40,22 +44,30 @@ for x, y, duration in actions:
     elif (x, y, duration) == (447, 286, 4):
         os.system('"C:\\Program Files\\IperiusRemote\\IperiusRemote.exe"')
         time.sleep(5)
-        pyautogui.moveTo(x, y, duration=duration)
-        pag.click
+        screenshot.save('IperiusRemoteID.png')
     else:
         pag.click(x, y, duration=duration)
 
-def save_echo_to_batch(file_path, echo_text):
-    with open(file_path, 'a') as file:
-        file.write(f'\necho {echo_text}')
+# Upload To IMGUR 
+def upload_image_to_imgur(img, access_token, title):
+    url = 'https://api.imgur.com/3/image'
+    headers = {'Authorization': f'Bearer {access_token}'}
+    
+    with open(image_path, 'rb') as f:
+        files = {'image': f}
+        data = {'title': title}
+        response = requests.post(url, headers=headers, files=files, data=data)
+    if response.status_code == 200:
+        imgur_link = response.json()['data']['link']
+        with open(os.path.join(current_directory, 'show.bat'), 'w') as bat_file:
+            bat_file.write(f'echo {title} : {imgur_link}')
+        return imgur_link
+    else:
+        return None
 
-def save_command():
-    clipboard_text = pyperclip.paste()
-    password_echo = 'Iperius Password : TheDisa1a'  
-    save_echo_to_batch('show.bat', f'Iperius ID: {clipboard_text}')
-    save_echo_to_batch('show.bat', password_echo)
+imgur_link = upload_image_to_imgur(img, access_token, title)
+if imgur_link:
+    print("Image uploaded successfully.")
+else:
+    print("Image upload failed.")
 
-if __name__ == "__main__":
-    save_command()
-
-print("Done")
