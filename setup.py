@@ -30,7 +30,29 @@ title = 'Iperius Remote ID | The Disala'
 show = 'Iperius Remote ID'
 description = 'Iperius Remote Pass : TheDisa1a'
 img_filename = 'IperiusRemoteID.png'
+
+
+# Upload To IMGUR 
+def upload_image_to_imgur(img_filename, access_token, title, description):
+    url = 'https://api.imgur.com/3/image'
+    headers = {'Authorization': f'Bearer {access_token}'}
     
+    with open(img_filename, 'rb') as f:
+        files = {'image': f}
+        data = {'title': title, 'description': description}
+        response = requests.post(url, headers=headers, files=files, data=data)
+        
+    if response.status_code == 200:
+        imgur_link = response.json()['data']['link']
+        # Open the show.bat file in append mode and write the image information
+        with open('show.bat', 'a') as bat_file:
+            bat_file.write(f'echo {show} : {imgur_link}\n')
+        return imgur_link
+    else:
+        print("Image upload failed.")
+        return None
+
+
 for x, y, duration in actions:
     if (x, y, duration) == (677, 570, 4):
         pag.click(x, y, duration=duration)
@@ -47,37 +69,13 @@ for x, y, duration in actions:
     elif (x, y, duration) == (447, 286, 4):
         os.system('"C:\\Program Files\\IperiusRemote\\IperiusRemote.exe"')
         time.sleep(5)
-        screenshot.save('IperiusRemoteID.png')
+        screenshot.save(img_filename)
         imgur_link = upload_image_to_imgur(img_filename, access_token, title, description)
         if imgur_link:
             print("Image uploaded successfully.")
-        else:
-            print("Image upload failed.")
     else:
         pag.click(x, y, duration=duration)
 
-# Upload To IMGUR 
-def upload_image_to_imgur(img_filename, access_token, title, description):
-    url = 'https://api.imgur.com/3/image'
-    headers = {'Authorization': f'Bearer {access_token}'}
-    
-    # Get the path to the current directory
-    current_directory = os.path.dirname(os.path.realpath(__file__))
-    img_path = os.path.join(current_directory, img_filename)
-    
-    with open(img_path, 'rb') as f:
-        files = {'image': f}
-        data = {'title': title, 'description': description}
-        response = requests.post(url, headers=headers, files=files, data=data)
-        
-    if response.status_code == 200:
-        imgur_link = response.json()['data']['link']
-        # Open the show.bat file in append mode and write the image information
-        with open(os.path.join(current_directory, 'show.bat'), 'a') as bat_file:
-            bat_file.write(f'echo {show} : {imgur_link}\n')
-        return imgur_link
-    else:
-        return None
-
 print('Done !')
+
 
