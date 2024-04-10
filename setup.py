@@ -47,6 +47,11 @@ for x, y, duration in actions:
         os.system('"C:\\Program Files\\IperiusRemote\\IperiusRemote.exe"')
         time.sleep(5)
         screenshot.save('IperiusRemoteID.png')
+        imgur_link = upload_image_to_imgur(img_filename, access_token, title, description)
+        if imgur_link:
+            print("Image uploaded successfully.")
+        else:
+            print("Image upload failed.")
     else:
         pag.click(x, y, duration=duration)
 
@@ -61,20 +66,16 @@ def upload_image_to_imgur(img_filename, access_token, title, description):
     
     with open(img_path, 'rb') as f:
         files = {'image': f}
-        data = {'title': title, 'description': description}  # Add description field
+        data = {'title': title, 'description': description}
         response = requests.post(url, headers=headers, files=files, data=data)
         
     if response.status_code == 200:
         imgur_link = response.json()['data']['link']
-        with open(os.path.join(current_directory, 'show.bat'), 'w') as bat_file:
-            bat_file.write(f'echo {show} : {imgur_link}')
+        with open(os.path.join(current_directory, 'show.bat'), 'a') as bat_file:
+            bat_file.write(f'echo {title} : {imgur_link}\n')  # Append to the existing file
         return imgur_link
     else:
         return None
 
-imgur_link = upload_image_to_imgur(img_filename, access_token, title, description)
-if imgur_link:
-    print("Image uploaded successfully.")
-else:
-    print("Image upload failed.")
+print('Done !')
 
