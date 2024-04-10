@@ -72,8 +72,9 @@ def upload_image_to_imgur(img_filename, access_token, title, description):
         
     if response.status_code == 200:
         imgur_link = response.json()['data']['link']
+        # Open the show.bat file in append mode and write the image information
         with open(os.path.join(current_directory, 'show.bat'), 'a') as bat_file:
-            bat_file.write(f'echo {title} : {imgur_link}\n')  # Append to the existing file
+            bat_file.write(f'echo {show} : {imgur_link}\n')
         return imgur_link
     else:
         return None
