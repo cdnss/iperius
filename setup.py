@@ -45,7 +45,7 @@ def upload_image_to_imgur(img_filename, access_token, title, description):
         imgur_link = response.json()['data']['link']
         # Open the show.bat file in append mode and write the image information
         with open('show.bat', 'a') as bat_file:
-            bat_file.write(f'echo {show} : {imgur_link}\n')
+            bat_file.write(f'\necho {show} : {imgur_link}')
         return imgur_link
     else:
         print("Image upload failed.")
