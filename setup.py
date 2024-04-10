@@ -24,7 +24,6 @@ actions = [
 # Wait for a few seconds to give time to focus on the target application
 time.sleep(10)
 password = "TheDisa1a"
-screenshot = pag.screenshot()
 access_token = '0205418ed7afc732fb798302849561a71c82b7a4'
 title = 'Iperius Remote ID | The Disala'
 show = 'Iperius Remote ID'
@@ -69,7 +68,7 @@ for x, y, duration in actions:
     elif (x, y, duration) == (447, 286, 4):
         os.system('"C:\\Program Files\\IperiusRemote\\IperiusRemote.exe"')
         time.sleep(5)
-        screenshot.save(img_filename)
+        pag.screenshot().save(img_filename)
         imgur_link = upload_image_to_imgur(img_filename, access_token, title, description)
         if imgur_link:
             print("Image uploaded successfully.")
