@@ -17,5 +17,3 @@ echo ..Youtube Video Tutorial - https://youtu.be/xqpCQCJXKxU ..
 echo ..........................................................
 echo User name : runneradmin
 echo User Pass : TheDisa1a
-echo Iperius Remote Pass : TheDisa1a
-
